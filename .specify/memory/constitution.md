@@ -1,50 +1,63 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+
+<!--
+Sync Impact Report
+Version change: (none) → 1.0.0
+Modified principles: all placeholders replaced with concrete values
+Added sections: Security & Training Constraints, Development Workflow
+Removed sections: none
+Templates requiring updates: plan-template.md (✅), spec-template.md (✅), tasks-template.md (✅)
+Follow-up TODOs: none
+-->
+
+# ContosoDashboard Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### I. Training-First Purpose
+All code, features, and documentation are designed for educational and demonstration use only. No code or architecture is intended for production deployment. All limitations and simplifications must be clearly documented.
+**Rationale:** Ensures the project remains focused on its core mission as a safe, low-risk training environment.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Security by Example (Mock Only)
+All security features (authentication, authorization, data isolation) are implemented for demonstration only, using mock or simplified logic. No real credentials, secrets, or production security mechanisms are permitted.
+**Rationale:** Prevents accidental misuse and highlights the difference between training and real-world security.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### III. Independent, Testable Slices
+Every user story and feature must be independently testable and deliver value in isolation. Testing is required for all core flows, and testability must be demonstrated for each increment.
+**Rationale:** Reinforces modular, incremental learning and enables safe experimentation.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### IV. Transparency & Documentation
+All simplifications, limitations, and deviations from production best practices must be explicitly documented in code comments and user-facing docs. No hidden shortcuts or silent tradeoffs are allowed.
+**Rationale:** Ensures learners understand what is real vs. simulated, and why.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+
+### V. Simplicity & Accessibility
+Favor the simplest possible implementation that demonstrates the intended concept. Prioritize clarity, accessibility, and ease of understanding over completeness or performance.
+**Rationale:** Lowers the barrier to entry and maximizes educational value.
+
+
+## Security & Training Constraints
+
+- No production credentials, secrets, or external integrations are permitted.
+- All authentication and authorization logic must be mock or demo-only.
+- The codebase must remain safe for offline, local use by default.
+- All known limitations and risks must be documented in the README and code comments.
+
+## Development Workflow
+
+- All features must be implemented as independently testable user stories.
+- Code reviews must verify that no production security or cloud dependencies are introduced.
+- Documentation must be updated with every feature or principle change.
+
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- This constitution supersedes all other project practices and conventions.
+- Amendments require documentation, explicit approval, and a migration plan if breaking changes are introduced.
+- All PRs and reviews must verify compliance with these principles and constraints.
+- Any complexity or deviation must be justified and documented.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-03-20 | **Last Amended**: 2026-03-20
