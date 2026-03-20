@@ -18,9 +18,33 @@ public class ApplicationDbContext : DbContext
     public DbSet<ProjectMember> ProjectMembers { get; set; } = null!;
     public DbSet<Announcement> Announcements { get; set; } = null!;
 
+    // Document Management
+    public DbSet<ContosoDashboard.Models.DocumentManagement.Document> Documents { get; set; } = null!;
+    public DbSet<ContosoDashboard.Models.DocumentManagement.DocumentShare> DocumentShares { get; set; } = null!;
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+
+        // Document entity configuration
+        modelBuilder.Entity<ContosoDashboard.Models.DocumentManagement.Document>(entity =>
+        {
+            entity.HasKey(d => d.DocumentId);
+            entity.Property(d => d.Title).IsRequired().HasMaxLength(255);
+            entity.Property(d => d.Category).IsRequired().HasMaxLength(100);
+            entity.Property(d => d.FilePath).IsRequired();
+            entity.Property(d => d.FileType).IsRequired().HasMaxLength(255);
+            entity.Property(d => d.FileSize).IsRequired();
+            entity.Property(d => d.UploadedBy).IsRequired();
+            entity.Property(d => d.UploadDate).IsRequired();
+        });
+
+        modelBuilder.Entity<ContosoDashboard.Models.DocumentManagement.DocumentShare>(entity =>
+        {
+            entity.HasKey(ds => new { ds.DocumentId, ds.UserId, ds.TeamId });
+            entity.Property(ds => ds.SharedBy).IsRequired();
+            entity.Property(ds => ds.SharedDate).IsRequired();
+        });
 
         // Configure User relationships
         modelBuilder.Entity<User>()

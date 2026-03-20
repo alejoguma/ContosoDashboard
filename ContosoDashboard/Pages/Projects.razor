@@ -11,6 +11,22 @@
 
 <div class="container-fluid">
     <div class="row mb-4">
+        <div class="col-md-8">
+            <h3>Upload Document</h3>
+            <InputFile OnChange="OnInputFileChange" />
+            @if (uploadInProgress)
+            {
+                <div class="progress mt-2">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="width: @uploadProgress%" aria-valuenow="@uploadProgress" aria-valuemin="0" aria-valuemax="100">@uploadProgress%</div>
+                </div>
+            }
+            @if (!string.IsNullOrEmpty(uploadMessage))
+            {
+                <div class="alert @(uploadSuccess ? "alert-success" : "alert-danger") mt-2">@uploadMessage</div>
+            }
+        </div>
+    </div>
+    <div class="row mb-4">
         <div class="col">
             <h1>My Projects</h1>
         </div>
@@ -90,6 +106,55 @@
 </div>
 
 @code {
+    private bool uploadInProgress = false;
+    private int uploadProgress = 0;
+    private string uploadMessage = string.Empty;
+    private bool uploadSuccess = false;
+
+    private async Task OnInputFileChange(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+        if (file == null) return;
+        uploadInProgress = true;
+        uploadProgress = 0;
+        uploadMessage = string.Empty;
+        uploadSuccess = false;
+
+        try
+        {
+            var content = new MultipartFormDataContent();
+            var stream = file.OpenReadStream(25 * 1024 * 1024); // 25MB
+            var fileContent = new StreamContent(stream);
+            fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+            content.Add(fileContent, "file", file.Name);
+            content.Add(new StringContent("Test Title"), "title");
+            content.Add(new StringContent("Project Documents"), "category");
+
+            var http = new HttpClient();
+            var response = await http.PostAsync("/api/documents/upload", content);
+            if (response.IsSuccessStatusCode)
+            {
+                uploadMessage = "Upload successful!";
+                uploadSuccess = true;
+            }
+            else
+            {
+                uploadMessage = $"Upload failed: {await response.Content.ReadAsStringAsync()}";
+                uploadSuccess = false;
+            }
+        }
+        catch (Exception ex)
+        {
+            uploadMessage = $"Error: {ex.Message}";
+            uploadSuccess = false;
+        }
+        finally
+        {
+            uploadInProgress = false;
+            uploadProgress = 100;
+            StateHasChanged();
+        }
+    }
     private List<Project>? projects;
     private int currentUserId = 0;
 
